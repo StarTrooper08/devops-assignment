@@ -18,6 +18,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${HOST_NAME}
           sudo apt-get update
           ls
+          git clone https://github.com/StarTrooper08/devops-assignment.git
           cd /devops-assignment
           source ./venv/bin/activate
           pip install -r requirements.txt
