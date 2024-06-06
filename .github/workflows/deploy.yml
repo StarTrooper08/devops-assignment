@@ -14,20 +14,27 @@ jobs:
           HOST_NAME : ${{ secrets.IP_ADD  }}
 
       run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${HOST_NAME}
-          sudo apt-get update
-          ls
-          git clone https://github.com/StarTrooper08/devops-assignment.git
-          cd /devops-assignment
-          source ./venv/bin/activate
+          echo "$PRIVATE_KEY" > private_key
+          chmod 400 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${HOST_NAME} << 'EOF'
+          sudo apt-get update -y
+          cd /home/ubuntu/devops-assignment || {
+            echo "Directory not found. Cloning repository..."
+            git clone https://github.com/yourusername/devops-assignment.git
+            cd devops-assignment
+            python3 -m venv venv
+            source venv/bin/activate
+            pip install -r requirements.txt
+          }
+          cd /home/ubuntu/devops-assignment
+          git pull origin main
+          source venv/bin/activate
           pip install -r requirements.txt
-          git pull
           sudo systemctl daemon-reload
           sudo systemctl start helloworld
           sudo systemctl enable helloworld
           sudo systemctl restart nginx
-
+          EOF
 
     #- name: S3 upload
      # run :
