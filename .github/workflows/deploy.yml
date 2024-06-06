@@ -18,8 +18,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${HOST_NAME}
           sudo apt-get update
           ls
-          cd ./devops-assignment
-          source venv/bin/activate
+          cd /home/ubuntu/devops-assignment
+          source ./venv/bin/activate
           pip install -r requirements.txt
           git pull
           sudo systemctl daemon-reload
