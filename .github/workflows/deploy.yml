@@ -1,0 +1,41 @@
+name: Flask Deployment
+on:
+  push:
+    branches: [ main ]
+jobs:
+  Deploy:
+    name: Deploy to Ec2
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Deploy in EC2
+      env:
+          PRIVATE_KEY: ${{ secrets.SSH_KEY  }}
+          HOST_NAME : ${{ secrets.IP_ADD  }}
+
+      run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${HOST_NAME} "
+          sudo apt-get update
+          ls
+          cd devops-assignment
+          source venv/bin/activate
+          pip install -r requirements.txt
+          git pull
+          sudo systemctl daemon-reload
+          sudo systemctl start helloworld
+          sudo systemctl enable helloworld
+          sudo systemctl restart nginx
+
+
+    #- name: S3 upload
+     # run :
+      #   echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+       #  ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${HOST_NAME} "
+        # sudo apt-get update
+         #aws configure
+         #echo "Hello, my name is Atharva. This is test file for s3." > test.txt
+         #aws s3 cp test.txt s3://devops-intern-assignment-atharva/test.txt --acl public-read
+
+
+    
