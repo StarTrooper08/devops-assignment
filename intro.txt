@@ -1,0 +1,5 @@
+Hi I'm Atharva from Mumbai,India. And I'm a passionate Devops Engineer.
+And I'm BSc Computer Science Graduate.
+I'm acquainted with tech stack like Linux, Bash Script, Git and Github, Python, Docker, Kubernetes(single node), Github Actions(CI/CD), root.io(formerly Slim.ai) and Cloud Providers like Azure and GCP.
+
+I had experience of 3 months as an Open Source Developer for GSoC'23 under R project. And in this program I worked around project where I honed my skills like Linux, Bash Script, Docker and Github Actions.
